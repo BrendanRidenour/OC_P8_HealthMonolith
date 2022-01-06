@@ -7,83 +7,78 @@ namespace CalifornianHealth.Controllers
     [Route("/book-appointment")]
     public class BookingController : Controller
     {
-        [HttpGet]
-        public Task<IActionResult> SelectConsultant([FromServices] IFetchConsultantsOperation operation) =>
-            this.SelectConsultantView(operation);
+        // 1. Patient information
+        // 2. Select consultatnt
+        // 3. Consultant calendar
+        // 4. Create appointment
 
-        [HttpPost]
-        public Task<IActionResult> SelectConsultant([FromServices] IFetchConsultantsOperation operation,
-            [FromForm]Patient patient) =>
-            this.SelectConsultantView(operation, patient);
 
-        protected async Task<IActionResult> SelectConsultantView(IFetchConsultantsOperation operation,
-            Patient? patient = null)
-        {
-            var consultants = await operation.FetchConsultants();
+        //[HttpGet]
+        //public Task<IActionResult> SelectConsultant([FromServices] IFetchConsultantsOperation operation) =>
+        //    this.SelectConsultantView(operation);
 
-            return View(viewName: "SelectConsultant",
-                model: new BookingViewModel<IReadOnlyList<Consultant>>(consultants, patient));
-        }
+        ////[HttpPost]
+        ////public Task<IActionResult> SelectConsultant([FromServices] IFetchConsultantsOperation operation,
+        ////    [FromForm] Patient patient) =>
+        ////    this.SelectConsultantView(operation, patient);
 
-        [HttpGet]
-        [Route("{consultantId}")]
-        public Task<IActionResult> ConsultantCalendar([FromServices] IFetchConsultantCalendarOperation operation,
-            [FromRoute] int consultantId) =>
-            this.ConsultantCalendarView(operation, consultantId);
+        //protected async Task<IActionResult> SelectConsultantView(IFetchConsultantsOperation operation,
+        //    Patient? patient = null)
+        //{
+        //    var consultants = await operation.FetchConsultants();
 
-        [HttpPost]
-        [Route("{consultantId}")]
-        public Task<IActionResult> ConsultantCalendar([FromServices] IFetchConsultantCalendarOperation operation,
-            [FromRoute] int consultantId, [FromForm]Patient patient) =>
-            this.ConsultantCalendarView(operation, consultantId, patient);
+        //    return View(viewName: "SelectConsultant",
+        //        model: new BookingViewModel<IReadOnlyList<Consultant>>(consultants, patient));
+        //}
 
-        protected async Task<IActionResult> ConsultantCalendarView(IFetchConsultantCalendarOperation operation,
-            int consultantId, Patient? patient = null)
-        {
-            var calendar = await operation.FetchConsultantCalendar(consultantId);
+        //[HttpPost]
+        //[Route("{consultantId}")]
+        //public Task<IActionResult> ConsultantCalendar([FromServices] IFetchConsultantCalendarOperation operation,
+        //    [FromRoute] int consultantId, [FromForm] Patient patient) =>
+        //    this.ConsultantCalendarView(operation, consultantId, patient);
 
-            if (calendar is null)
-                return View("NotFound");
+        //protected async Task<IActionResult> ConsultantCalendarView(IFetchConsultantCalendarOperation operation,
+        //    int consultantId, Patient? patient = null)
+        //{
+        //    var calendar = await operation.FetchConsultantCalendar(consultantId);
 
-            return View(viewName: "ConsultantCalendar",
-                model: new BookingViewModel<AvailableDates>(calendar, patient));
-        }
+        //    if (calendar is null)
+        //        return NotFound();
 
-        [HttpGet]
-        [Route("{consultantId}/patient")]
-        public IActionResult PatientAppointment() =>
-            this.PatientAppointmentView(new PatientAppointment());
+        //    return View(viewName: "ConsultantCalendar",
+        //        model: new BookingViewModel<AvailableDates>(calendar, patient));
+        //}
 
-        [HttpPost]
-        [Route("{consultantId}/patient")]
-        public async Task<IActionResult> PatientAppointment([FromServices] ICreateAppointmentOperation operation,
-            [FromRoute] int consultantId, [FromForm] PatientAppointment patientAppointment)
-        {
-            if (!ModelState.IsValid)
-                return this.PatientAppointmentView(patientAppointment);
+        //[HttpPost]
+        //[Route("{consultantId}/patient")]
+        //public async Task<IActionResult> PatientAppointment([FromServices] ICreateAppointmentOperation operation,
+        //    [FromRoute] int consultantId, [FromForm] PatientAppointment patientAppointment)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return this.PatientAppointmentView(patientAppointment);
 
-            var (startDateTime, endDateTime) = patientAppointment.ToDates();
+        //    var (startDateTime, endDateTime) = patientAppointment.ToDates();
 
-            return await this.CreateAppointmentView(operation, new Appointment()
-            {
-                ConsultantId = consultantId,
-                StartDateTime = startDateTime,
-                EndDateTime = endDateTime,
-                Patient = patientAppointment,
-            });
-        }
+        //    return await this.CreateAppointmentView(operation, new Appointment()
+        //    {
+        //        ConsultantId = consultantId,
+        //        StartDateTime = startDateTime,
+        //        EndDateTime = endDateTime,
+        //        Patient = patientAppointment,
+        //    });
+        //}
 
-        protected IActionResult PatientAppointmentView(PatientAppointment patientAppointment) =>
-            View(viewName: "PatientAppointment", model: patientAppointment);
+        //protected IActionResult PatientAppointmentView(PatientAppointment patientAppointment) =>
+        //    View(viewName: "PatientAppointment", model: patientAppointment);
 
-        protected async Task<IActionResult> CreateAppointmentView(ICreateAppointmentOperation operation,
-            Appointment appointment)
-        {
-            var success = await operation.CreateAppointment(appointment);
+        //protected async Task<IActionResult> CreateAppointmentView(ICreateAppointmentOperation operation,
+        //    Appointment appointment)
+        //{
+        //    var success = await operation.CreateAppointment(appointment);
 
-            var viewName = success ? "CreateAppointmentSucceeded" : "CreateAppointmentFailed";
+        //    var viewName = success ? "CreateAppointmentSucceeded" : "CreateAppointmentFailed";
 
-            return View(viewName, model: appointment);
-        }
+        //    return View(viewName, model: appointment);
+        //}
     }
 }

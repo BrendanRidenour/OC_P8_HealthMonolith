@@ -1,0 +1,27 @@
+﻿@model CalifornianHealth.Models.Booking.BookingViewModel<IReadOnlyList<Consultant>>
+
+<section id="consultants" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h2 class="ser-title">Who would you like to meet with?</h2>
+                <hr class="botm-line">
+                <form id="select-consultant" method="post" asp-antiforgery="true">
+                    <div class="form-group">
+                        <select name="consultant" title="Select Consultant">
+                            @foreach (var consultant in Model.Data)
+                            {
+                                var url = Url.Action(action: "ConsultantCalendar", controller: "Booking", values: new { consultantId = consultant.Id });
+
+                                <option value="@url">@consultant.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <p>
+                        <button>Schedule Appointment</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
