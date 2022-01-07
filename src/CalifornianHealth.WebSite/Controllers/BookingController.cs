@@ -8,12 +8,12 @@ namespace CalifornianHealth.Controllers
     public class BookingController : Controller
     {
         private readonly IFetchConsultantsOperation _consultantsOperation;
-        private readonly IFetchConsultantDatesOperation _datesOperation;
+        private readonly IFetchConsultantCalendarOperation _datesOperation;
         private readonly IFetchConsultantScheduleOperation _scheduleOperation;
         private readonly ICreateAppointmentOperation _appointmentOperation;
 
         public BookingController(IFetchConsultantsOperation consultantsOperation,
-            IFetchConsultantDatesOperation datesOperation,
+            IFetchConsultantCalendarOperation datesOperation,
             IFetchConsultantScheduleOperation scheduleOperation,
             ICreateAppointmentOperation appointmentOperation)
         {
@@ -93,7 +93,7 @@ namespace CalifornianHealth.Controllers
 
         protected async Task<IActionResult> ConsultantCalendarView(PatientCalendarDate patient)
         {
-            var calendar = await this._datesOperation.FetchConsultantDates(
+            var calendar = await this._datesOperation.FetchConsultantCalendar(
                 patient.ConsultantId);
 
             if (calendar is null)

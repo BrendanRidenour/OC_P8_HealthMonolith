@@ -1,8 +1,8 @@
 ﻿namespace CalifornianHealth.Data
 {
-    public class InMemoryFetchConsultantCalendarOperation : IFetchConsultantDatesOperation
+    public class InMemoryFetchConsultantCalendarOperation : IFetchConsultantCalendarOperation
     {
-        public Task<ConsultantAvailability<Date>?> FetchConsultantDates(int consultantId)
+        public Task<ConsultantAvailability<Date>?> FetchConsultantCalendar(int consultantId)
         {
             var availableDays = new List<Date>();
 
