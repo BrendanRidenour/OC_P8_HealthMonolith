@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalifornianHealth.Core", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalifornianHealth.WebSite", "src\CalifornianHealth.WebSite\CalifornianHealth.WebSite.csproj", "{41ADBBF0-CFE9-4A6D-B495-103E79CCBF46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalifornianHealth.ApiService", "src\CalifornianHealth.ApiService\CalifornianHealth.ApiService.csproj", "{F30C7531-13D9-4158-8C54-4EFC7062E9FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalifornianHealth.ApiService", "src\CalifornianHealth.ApiService\CalifornianHealth.ApiService.csproj", "{F30C7531-13D9-4158-8C54-4EFC7062E9FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

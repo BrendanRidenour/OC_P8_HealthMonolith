@@ -1,0 +1,17 @@
+﻿@model BookingViewModel<Appointment, PatientAppointment>
+
+<section id="consultants" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h2 class="ser-title">Your appointment is confirmed</h2>
+                <hr class="botm-line">
+                <p>Thank you @Model!.Data.Patient.FName,</p>
+                <p>
+                    Your appointment is confirmed for <strong>@Model.Data.StartDateTime.ToString("f")</strong>.
+                    See you then!
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

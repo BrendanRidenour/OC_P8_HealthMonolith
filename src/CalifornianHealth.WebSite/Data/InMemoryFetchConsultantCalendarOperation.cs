@@ -1,21 +1,23 @@
 ﻿namespace CalifornianHealth.Data
 {
-    public class InMemoryFetchConsultantCalendarOperation : IFetchConsultantCalendarOperation
+    public class InMemoryFetchConsultantCalendarOperation : IFetchConsultantDatesOperation
     {
-        public Task<AvailableDates> FetchConsultantCalendar(int consultantId)
+        public Task<ConsultantAvailability<Date>?> FetchConsultantDates(int consultantId)
         {
             var availableDays = new List<Date>();
 
-            for (var i = 0; i < 90; i++)
+            for (var i = 0; i < 30; i++)
             {
                 var date = DateTime.Now.AddDays(i);
 
-                availableDays.Add(new Date(date));
+                if (i % 2 == 0)
+                    availableDays.Add(new Date(date));
             }
 
-            var dates = new AvailableDates(availableDays);
+            var availableDates = new List<Date>(availableDays);
 
-            return Task.FromResult(dates);
+            return Task.FromResult<ConsultantAvailability<Date>?>(
+                new ConsultantAvailability<Date>(availableDates));
         }
     }
 }

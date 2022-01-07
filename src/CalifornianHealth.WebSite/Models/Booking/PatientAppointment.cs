@@ -1,23 +1,33 @@
-﻿namespace CalifornianHealth.Models.Booking
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CalifornianHealth.Models.Booking
 {
-    public class PatientAppointment : Patient
+    public class PatientAppointment : PatientCalendarDate
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
-        public int StartHour { get; set; }
-        public int StartMinute { get; set; }
+        [Required(ErrorMessage = "Please choose a time for the appointment.")]
+        public string Time { get; set; } = null!;
 
-        public (DateTime startDateTime, DateTime endDateTime) ToDates()
+        public PatientAppointment(PatientAppointment patient)
+            : this((PatientCalendarDate)patient)
         {
-            var date = new Date(year: Year, month: Month, day: Day);
+            this.Time = patient.Time;
+        }
 
-            var startDateTime = new DateTime(year: Year, month: Month, day: Day,
-                hour: StartHour, minute: StartMinute, second: 0);
+        public PatientAppointment(PatientCalendarDate patient)
+            : base(patient)
+        { }
 
-            var endDateTime = startDateTime.AddMinutes(30);
+        public PatientAppointment() { }
 
-            return (startDateTime, endDateTime);
+        public Time ToTime() => CalifornianHealth.Time.Parse(this.Time);
+
+        public DateTime ToStartDateTime()
+        {
+            var date = this.ToDate();
+            var time = this.ToTime();
+
+            return new DateTime(year: date.Year, month: date.Month, day: date.Day,
+                hour: time.Hour, minute: time.Minute, second: 0);
         }
     }
 }

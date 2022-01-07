@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IFetchConsultantsOperation, InMemoryFetchConsultantsOperation>();
-builder.Services.AddTransient<IFetchConsultantCalendarOperation, InMemoryFetchConsultantCalendarOperation>();
+builder.Services.AddTransient<IFetchConsultantDatesOperation, InMemoryFetchConsultantCalendarOperation>();
+builder.Services.AddTransient<IFetchConsultantScheduleOperation, InMemoryFetchConsultantScheduleOperation>();
 builder.Services.AddTransient<ICreateAppointmentOperation, InMemoryCreateAppointmentOperation>();
 
 var app = builder.Build();

@@ -1,13 +1,14 @@
 ﻿namespace CalifornianHealth.Models.Booking
 {
-    public class BookingViewModel<T>
+    public class BookingViewModel<TData, TPatient>
+        where TPatient : Patient
     {
-        public T Data { get; }
-        public Patient? Patient { get; }
+        public TData Data { get; }
+        public TPatient Patient { get; }
 
-        public BookingViewModel(T model, Patient? patient)
+        public BookingViewModel(TData data, TPatient patient)
         {
-            this.Data = model;
+            this.Data = data;
             this.Patient = patient;
         }
     }

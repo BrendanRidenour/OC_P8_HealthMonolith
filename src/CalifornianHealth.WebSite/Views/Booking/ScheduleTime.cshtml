@@ -1,0 +1,34 @@
+﻿@model BookingViewModel<ConsultantAvailability<Time>, PatientAppointment>
+
+<section id="consultants" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h2 class="ser-title">Choose the date and time of your appointment</h2>
+                <hr class="botm-line">
+                <form method="post" asp-action="@nameof(BookingController.CreateAppointment)" asp-antiforgery="true">
+                    <div class="form-group">
+                        <label asp-for="Patient.Time">Available Times</label><br />
+                        <select asp-for="Patient.Time">
+                            @foreach (var time in Model!.Data.Available)
+                            {
+                                <option value="@time.ToString()">@time.ToString()</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Patient.Time"></span>
+                    </div>
+                    <button type="submit" class="btn" asp-action="@nameof(BookingController.ConsultantCalendar)">Back</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                    <input type="hidden" asp-for="Patient.FName" />
+                    <input type="hidden" asp-for="Patient.LName" />
+                    <input type="hidden" asp-for="Patient.Address1" />
+                    <input type="hidden" asp-for="Patient.Address2" />
+                    <input type="hidden" asp-for="Patient.City" />
+                    <input type="hidden" asp-for="Patient.PostCode" />
+                    <input type="hidden" asp-for="Patient.ConsultantId" />
+                    <input type="hidden" asp-for="Patient.Date" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

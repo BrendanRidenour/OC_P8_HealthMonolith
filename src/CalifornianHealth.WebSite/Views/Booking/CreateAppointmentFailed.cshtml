@@ -1,0 +1,35 @@
+﻿@model BookingViewModel<Appointment, PatientAppointment>
+
+<section id="consultants" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h2 class="ser-title">We couldn't book your appointment</h2>
+                <hr class="botm-line">
+                <p>I'm sorry @Model!.Data.Patient.FName,</p>
+                <p>
+                    It looks like someone already booked an appointment at your preferred time.
+                    You have a couple options. Below, you can <strong>Choose a Different Date and Time</strong>
+                    with the same consultant. Or, you can <strong>Choose A Different Consultant</strong>
+                    to see if they have an opening at your desired time.
+                </p>
+                <p>
+                    <form method="post" asp-action="@nameof(BookingController.ConsultantCalendar)" asp-antiforgery="true">
+                        <button type="submit" class="btn btn-primary">Choose a Different Date and Time</button>
+                        <button type="submit" class="btn btn-primary"
+                            asp-action="@nameof(BookingController.SelectConsultant)">Choose a Different Consultant</button>
+                        <input type="hidden" asp-for="Patient.FName" />
+                        <input type="hidden" asp-for="Patient.LName" />
+                        <input type="hidden" asp-for="Patient.Address1" />
+                        <input type="hidden" asp-for="Patient.Address2" />
+                        <input type="hidden" asp-for="Patient.City" />
+                        <input type="hidden" asp-for="Patient.PostCode" />
+                        <input type="hidden" asp-for="Patient.ConsultantId" />
+                        <input type="hidden" asp-for="Patient.Date" />
+                        <input type="hidden" asp-for="Patient.Time" />
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

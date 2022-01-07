@@ -1,4 +1,4 @@
-﻿@model CalifornianHealth.Models.Booking.BookingViewModel<IReadOnlyList<Consultant>>
+﻿@model BookingViewModel<IReadOnlyList<Consultant>, PatientConsultant>
 
 <section id="consultants" class="section-padding">
     <div class="container">
@@ -6,20 +6,23 @@
             <div class="col-md-12 col-sm-12">
                 <h2 class="ser-title">Who would you like to meet with?</h2>
                 <hr class="botm-line">
-                <form id="select-consultant" method="post" asp-antiforgery="true">
+                <form method="post" asp-action="@nameof(BookingController.ConsultantCalendar)" asp-antiforgery="true">
                     <div class="form-group">
-                        <select name="consultant" title="Select Consultant">
-                            @foreach (var consultant in Model.Data)
+                        <select asp-for="Patient.ConsultantId" title="Select Consultant">
+                            @foreach (var consultant in Model!.Data)
                             {
-                                var url = Url.Action(action: "ConsultantCalendar", controller: "Booking", values: new { consultantId = consultant.Id });
-
-                                <option value="@url">@consultant.ToString()</option>
+                                <option value="@consultant.Id">@consultant.ToString()</option>
                             }
                         </select>
                     </div>
-                    <p>
-                        <button>Schedule Appointment</button>
-                    </p>
+                    <button type="submit" class="btn" asp-action="@nameof(BookingController.PatientInformation)">Back</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                    <input type="hidden" asp-for="Patient.FName" />
+                    <input type="hidden" asp-for="Patient.LName" />
+                    <input type="hidden" asp-for="Patient.Address1" />
+                    <input type="hidden" asp-for="Patient.Address2" />
+                    <input type="hidden" asp-for="Patient.City" />
+                    <input type="hidden" asp-for="Patient.PostCode" />
                 </form>
             </div>
         </div>
