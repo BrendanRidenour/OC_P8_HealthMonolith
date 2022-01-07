@@ -8,17 +8,17 @@ namespace CalifornianHealth.Controllers
     public class BookingController : Controller
     {
         private readonly IFetchConsultantsOperation _consultantsOperation;
-        private readonly IFetchConsultantCalendarOperation _datesOperation;
+        private readonly IFetchConsultantCalendarOperation _calendarOperation;
         private readonly IFetchConsultantScheduleOperation _scheduleOperation;
         private readonly ICreateAppointmentOperation _appointmentOperation;
 
         public BookingController(IFetchConsultantsOperation consultantsOperation,
-            IFetchConsultantCalendarOperation datesOperation,
+            IFetchConsultantCalendarOperation calendarOperation,
             IFetchConsultantScheduleOperation scheduleOperation,
             ICreateAppointmentOperation appointmentOperation)
         {
             this._consultantsOperation = consultantsOperation ?? throw new ArgumentNullException(nameof(consultantsOperation));
-            this._datesOperation = datesOperation ?? throw new ArgumentNullException(nameof(datesOperation));
+            this._calendarOperation = calendarOperation ?? throw new ArgumentNullException(nameof(calendarOperation));
             this._scheduleOperation = scheduleOperation ?? throw new ArgumentNullException(nameof(scheduleOperation));
             this._appointmentOperation = appointmentOperation ?? throw new ArgumentNullException(nameof(appointmentOperation));
         }
@@ -93,7 +93,7 @@ namespace CalifornianHealth.Controllers
 
         protected async Task<IActionResult> ConsultantCalendarView(PatientCalendarDate patient)
         {
-            var calendar = await this._datesOperation.FetchConsultantCalendar(
+            var calendar = await this._calendarOperation.FetchConsultantCalendar(
                 patient.ConsultantId);
 
             if (calendar is null)

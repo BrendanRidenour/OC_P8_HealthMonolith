@@ -2,6 +2,6 @@
 {
     public interface IFetchConsultantsOperation
     {
-        Task<IReadOnlyList<Consultant>> FetchConsultants();
+        Task<IReadOnlyList<Consultant>?> FetchConsultants();
     }
 }

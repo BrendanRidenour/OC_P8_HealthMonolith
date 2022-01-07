@@ -8,5 +8,7 @@ namespace CalifornianHealth.Data
         public DbSet<ConsultantEntity> Consultants { get; set; } = null!;
         public DbSet<ConsultantCalendarEntity> ConsultantCalendars { get; set; } = null!;
         public DbSet<PatientEntity> Patients { get; set; } = null!;
+
+        public CHDBContext(DbContextOptions<CHDBContext> options) : base(options) { }
     }
 }
