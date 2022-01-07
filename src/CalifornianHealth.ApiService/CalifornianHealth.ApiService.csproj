@@ -13,7 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CalifornianHealth.Core\CalifornianHealth.Core.csproj" />
+	  <ProjectReference Include="..\CalifornianHealth.EFCore\CalifornianHealth.EFCore.csproj" />
 	</ItemGroup>
 
 </Project>
