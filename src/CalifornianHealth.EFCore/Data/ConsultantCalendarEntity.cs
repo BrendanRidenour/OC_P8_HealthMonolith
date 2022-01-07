@@ -9,5 +9,7 @@ namespace CalifornianHealth.Data
         public int ConsultantId { get; set; }
         public DateTime Date { get; set; }
         public bool Available { get; set; } = true;
+
+        public virtual ConsultantEntity Consultant { get; set; } = null!;
     }
 }

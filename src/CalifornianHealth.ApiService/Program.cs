@@ -1,7 +1,10 @@
 using CalifornianHealth.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<ISystemClock, SystemClock>();
 
 builder.Services.AddDbContext<CHDBContext>(db =>
 {

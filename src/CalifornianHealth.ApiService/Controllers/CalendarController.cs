@@ -8,7 +8,7 @@ namespace CalifornianHealth.Controllers
         [HttpGet("/consultants/{consultantId}")]
         public async Task<ActionResult<ConsultantAvailability<Date>?>> FetchConsultantCalendar(
             [FromServices] Data.IFetchConsultantCalendarOperation operation,
-            [FromRoute]int consultantId)
+            [FromRoute] int consultantId)
         {
             var calendar = await operation.FetchConsultantCalendar(consultantId);
 
@@ -17,5 +17,5 @@ namespace CalifornianHealth.Controllers
 
             return calendar;
         }
-}
+    }
 }

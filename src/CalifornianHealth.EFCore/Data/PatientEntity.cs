@@ -6,6 +6,12 @@ namespace CalifornianHealth.Data
     public class PatientEntity : Patient
     {
         [Column("ID")]
-        public override int Id { get; set; }
+        public int Id { get; set; }
+
+        public PatientEntity(Patient patient)
+            : base(patient)
+        { }
+
+        public PatientEntity() { }
     }
 }

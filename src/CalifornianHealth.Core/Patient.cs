@@ -4,8 +4,6 @@ namespace CalifornianHealth
 {
     public class Patient
     {
-        public virtual int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public virtual string FName { get; set; } = null!;
@@ -19,7 +17,7 @@ namespace CalifornianHealth
         public virtual string Address1 { get; set; } = null!;
 
         [StringLength(255)]
-        public virtual string Address2 { get; set; } = null!;
+        public virtual string? Address2 { get; set; } = null!;
 
         [Required]
         [StringLength(50)]
@@ -32,7 +30,6 @@ namespace CalifornianHealth
         public Patient(Patient patient)
             : this()
         {
-            this.Id = patient.Id;
             this.FName = patient.FName;
             this.LName = patient.LName;
             this.Address1 = patient.Address1;
