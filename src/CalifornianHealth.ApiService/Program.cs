@@ -3,13 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder.Configuration["Data:SqlServer:ConnectionString"];
-if (connectionString.Contains("%CONTENTROOTPATH%"))
-    connectionString = connectionString.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath);
-
 builder.Services.AddDbContext<CHDBContext>(db =>
 {
-    db.UseSqlServer(connectionString);
+    db.UseSqlServer(builder.Configuration["Data:SqlServer:ConnectionString"]);
 });
 
 builder.Services.AddTransient<IFetchConsultantsOperation, EntityFrameworkOperationService>();
