@@ -2,12 +2,18 @@ using CalifornianHealth.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
 
-builder.Services.AddTransient<IFetchConsultantsOperation, InMemoryFetchConsultantsOperation>();
-builder.Services.AddTransient<IFetchConsultantCalendarOperation, InMemoryFetchConsultantCalendarOperation>();
-builder.Services.AddTransient<IFetchConsultantScheduleOperation, InMemoryFetchConsultantScheduleOperation>();
-builder.Services.AddTransient<ICreateAppointmentOperation, InMemoryCreateAppointmentOperation>();
+var apiServiceOptions = new ApiServiceClientOptions(
+    apiRootEndpoint: builder.Configuration["ApiServiceClient:RootEndpoint"]);
+builder.Services.AddSingleton(apiServiceOptions);
+
+builder.Services.AddTransient<IFetchConsultantsOperation, ApiServiceClient>();
+builder.Services.AddTransient<IFetchConsultantCalendarOperation, ApiServiceClient>();
+builder.Services.AddTransient<IFetchConsultantScheduleOperation, ApiServiceClient>();
+builder.Services.AddTransient<ICreateAppointmentOperation, ApiServiceClient>();
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
