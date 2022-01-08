@@ -6,8 +6,7 @@ namespace CalifornianHealth.Controllers
     public class AppointmentController : ControllerBase
     {
         [HttpPost("/appointment")]
-        public Task<bool> FetchConsultantSchedule(
-            [FromServices] Data.ICreateAppointmentOperation operation,
-            [FromBody] Appointment appointment) => operation.CreateAppointment(appointment);
+        public async Task<bool> FetchConsultantSchedule([FromServices] Data.ICreateAppointmentOperation operation,
+            [FromBody] Appointment appointment) => await operation.CreateAppointment(appointment);
     }
 }

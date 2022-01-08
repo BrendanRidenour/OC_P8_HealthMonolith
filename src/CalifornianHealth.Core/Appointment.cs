@@ -2,6 +2,7 @@
 
 namespace CalifornianHealth
 {
+#warning Model validation: Only hour 9-17, 30 minute intervals, must be (how far?) in the future
     public class Appointment
     {
         [Required]

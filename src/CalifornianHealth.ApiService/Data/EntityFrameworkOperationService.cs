@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CalifornianHealth.Concurrency;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
 
 namespace CalifornianHealth.Data
@@ -8,11 +9,14 @@ namespace CalifornianHealth.Data
         ICreateAppointmentOperation
     {
         private readonly CHDBContext _db;
+        private readonly IConcurrencyService _concurrency;
         private readonly ISystemClock _clock;
 
-        public EntityFrameworkOperationService(CHDBContext db, ISystemClock clock)
+        public EntityFrameworkOperationService(CHDBContext db, IConcurrencyService concurrency,
+            ISystemClock clock)
         {
             this._db = db ?? throw new ArgumentNullException(nameof(db));
+            this._concurrency = concurrency ?? throw new ArgumentNullException(nameof(concurrency));
             this._clock = clock ?? throw new ArgumentNullException(nameof(clock));
         }
 
@@ -41,15 +45,20 @@ namespace CalifornianHealth.Data
             {
                 var start = new DateTime(year: date.Year, month: date.Month, day: date.Day,
                     hour: hour, minute: 0, second: 0);
+                
+                // Consider if LocalDateTime is best for this use case. Works for now.
+                var now = _clock.UtcNow.LocalDateTime;
 
-                if (!schedule.Where(e => e.StartDateTime == start).Any())
+                if (start >= now.AddMinutes(30) &&
+                    !schedule.Where(e => e.StartDateTime == start).Any())
                 {
                     times.Add(new Time(hour, 00));
                 }
 
                 start = start.AddMinutes(30);
 
-                if (!schedule.Where(e => e.StartDateTime == start).Any())
+                if (start >= now.AddMinutes(30) &&
+                    !schedule.Where(e => e.StartDateTime == start).Any())
                 {
                     times.Add(new Time(hour, 30));
                 }
@@ -60,9 +69,7 @@ namespace CalifornianHealth.Data
 
         public async Task<bool> CreateAppointment(Appointment appointment)
         {
-            // Model validation: Only hour 9-17, 30 minute intervals, must be (how far?) in the future
-
-#warning WRAP THIS INSIDE A QUEUE!
+            using var queue = await this._concurrency.EnterQueue();
 
             if (await AppointmentAlreadyExists(appointment.ConsultantId, appointment.StartDateTime))
                 return false;

@@ -1,3 +1,4 @@
+using CalifornianHealth.Concurrency;
 using CalifornianHealth.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Internal;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<ISystemClock, SystemClock>();
+builder.Services.AddTransient<IConcurrencyService, ConcurrentQueueConcurrencyService>();
 
 builder.Services.AddDbContext<CHDBContext>(db =>
 {
