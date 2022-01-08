@@ -1,6 +1,6 @@
 ﻿namespace CalifornianHealth.Concurrency
 {
-    public class ConcurrentOperation : IDisposable
+    public sealed class ConcurrentOperation : IDisposable
     {
         private readonly TaskCompletionSource _operationSource;
 
