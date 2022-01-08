@@ -1,4 +1,6 @@
-﻿namespace CalifornianHealth.Data
+﻿using System.Net;
+
+namespace CalifornianHealth.Data
 {
     public class ApiServiceClient
         : IFetchConsultantsOperation, IFetchConsultantCalendarOperation, IFetchConsultantScheduleOperation,
@@ -42,9 +44,10 @@
         {
             var response = await this._http.PostAsJsonAsync("appointment", appointment);
 
-            var result = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == HttpStatusCode.Created)
+                return true;
 
-            return bool.Parse(result);
+            return false;
         }
     }
 }

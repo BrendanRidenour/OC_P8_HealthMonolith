@@ -1,6 +1,7 @@
 ﻿using CalifornianHealth.Concurrency;
 using CalifornianHealth.Controllers;
 using CalifornianHealth.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
 using System;
@@ -79,7 +80,10 @@ namespace CalifornianHealth
 
             var result = await controller.CreateAppointment(operation, appointment);
 
-            return result;
+            if (result is StatusCodeResult status && status.StatusCode == 201)
+                return true;
+
+            return false;
         }
 
         readonly DbContextOptions<CHDBContext> dbContextOptions = new DbContextOptionsBuilder<CHDBContext>()
