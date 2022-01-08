@@ -77,7 +77,7 @@
 
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="thumbnail">
-                        <img src=@String.Format("img/doctor{0}.jpg", consultant.Id)
+                        <img src="~/img/doctor@(consultant.Id).jpg"
                              alt="@consultant.ToString()" class="team-img">
                         <div class="caption">
                             <h3>@consultant.FName </h3>

@@ -2,11 +2,11 @@ using CalifornianHealth.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient();
-
 var apiServiceOptions = new ApiServiceClientOptions(
-    apiRootEndpoint: builder.Configuration["ApiServiceClient:RootEndpoint"]);
+    baseAddress: builder.Configuration["ApiServiceClient:BaseAddress"]);
 builder.Services.AddSingleton(apiServiceOptions);
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddTransient<IFetchConsultantsOperation, ApiServiceClient>();
 builder.Services.AddTransient<IFetchConsultantCalendarOperation, ApiServiceClient>();

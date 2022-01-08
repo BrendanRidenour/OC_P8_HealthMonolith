@@ -11,11 +11,13 @@
         {
             this._http = http ?? throw new ArgumentNullException(nameof(http));
             this._options = options ?? throw new ArgumentNullException(nameof(options));
+
+            this._http.BaseAddress = new Uri(this._options.BaseAddress);
         }
 
         public async Task<IReadOnlyList<Consultant>?> FetchConsultants()
         {
-            var response = await this._http.GetFromJsonAsync<List<Consultant>>(BuildEndpoint("/consultants"));
+            var response = await this._http.GetFromJsonAsync<List<Consultant>>("consultants");
 
             return response?.AsReadOnly();
         }
@@ -23,7 +25,7 @@
         public async Task<ConsultantAvailability<Date>?> FetchConsultantCalendar(int consultantId)
         {
             var response = await this._http.GetFromJsonAsync<ConsultantAvailability<Date>?>(
-                BuildEndpoint($"/consultants/{consultantId}"));
+                $"consultants/{consultantId}");
 
             return response;
         }
@@ -31,26 +33,25 @@
         public async Task<ConsultantAvailability<Time>?> FetchConsultantSchedule(int consultantId, Date date)
         {
             var response = await this._http.GetFromJsonAsync<ConsultantAvailability<Time>?>(
-                BuildEndpoint($"/consultants/{consultantId}/schedule/{date}"));
+                $"consultants/{consultantId}/schedule/{date}");
 
             return response;
         }
 
         public async Task<bool> CreateAppointment(Appointment appointment)
         {
-            var response = await this._http.PostAsJsonAsync(BuildEndpoint("/appointment"),
-                appointment);
+            var response = await this._http.PostAsJsonAsync("appointment", appointment);
 
             var result = await response.Content.ReadAsStringAsync();
 
             return bool.Parse(result);
         }
 
-        private string BuildEndpoint(string relativePath)
-        {
-            var baseUri = new Uri(this._options.ApiRootEndpoint);
+        //private string BuildEndpoint(string relativePath)
+        //{
+        //    var baseUri = new Uri(this._options.ApiRootEndpoint);
 
-            return new Uri(baseUri, relativePath).ToString();
-        }
+        //    return new Uri(baseUri, relativePath).ToString();
+        //}
     }
 }
