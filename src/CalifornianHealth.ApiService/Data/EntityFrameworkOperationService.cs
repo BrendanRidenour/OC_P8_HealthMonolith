@@ -71,7 +71,7 @@ namespace CalifornianHealth.Data
         {
             using var queue = await this._concurrency.EnterQueue();
 
-            if (await AppointmentAlreadyExists(appointment.ConsultantId, appointment.StartDateTime))
+            if (await AppointmentNotPossible(appointment.ConsultantId, appointment.StartDateTime))
                 return false;
 
             var patientEntity = new PatientEntity(appointment.Patient);
@@ -89,15 +89,22 @@ namespace CalifornianHealth.Data
             await this._db.SaveChangesAsync();
 
             return true;
+        }
 
-            async Task<bool> AppointmentAlreadyExists(int consultantId, DateTime startDateTime)
-            {
-                var existingAppointment = await this._db.Appointments
-                   .Where(e => e.ConsultantId == consultantId && e.StartDateTime == startDateTime)
-                   .SingleOrDefaultAsync();
+        async Task<bool> AppointmentNotPossible(int consultantId, DateTime startDateTime)
+        {
+            var consultantAvailableOnDate = await this._db.ConsultantCalendars
+                .Where(e => e.ConsultantId == consultantId && e.Date == startDateTime.Date && e.Available)
+                .SingleOrDefaultAsync();
 
-                return existingAppointment is not null;
-            }
+            if (consultantAvailableOnDate is null)
+                return false;
+
+            var existingAppointment = await this._db.Appointments
+               .Where(e => e.ConsultantId == consultantId && e.StartDateTime == startDateTime)
+               .SingleOrDefaultAsync();
+
+            return existingAppointment is not null;
         }
     }
 }

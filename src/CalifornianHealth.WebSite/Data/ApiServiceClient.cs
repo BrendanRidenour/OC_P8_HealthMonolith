@@ -46,12 +46,5 @@
 
             return bool.Parse(result);
         }
-
-        //private string BuildEndpoint(string relativePath)
-        //{
-        //    var baseUri = new Uri(this._options.ApiRootEndpoint);
-
-        //    return new Uri(baseUri, relativePath).ToString();
-        //}
     }
 }

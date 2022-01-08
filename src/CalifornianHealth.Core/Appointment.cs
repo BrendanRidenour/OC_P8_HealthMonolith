@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CalifornianHealth.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace CalifornianHealth
 {
-#warning Model validation: Only hour 9-16, 30 minute intervals, must be (how far?) in the future
     public class Appointment
     {
         [Required]
+        [DateTimeMinute(0, 30)]
+        [DateTimeHour(MinValue = 9, MaxValue = 16)]
         public virtual DateTime StartDateTime { get; set; }
 
         [Required]
