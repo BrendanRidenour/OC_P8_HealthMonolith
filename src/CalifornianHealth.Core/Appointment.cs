@@ -8,6 +8,7 @@ namespace CalifornianHealth
         [Required]
         [DateTimeMinute(0, 30)]
         [DateTimeHour(MinValue = 9, MaxValue = 16)]
+        [DateTimeAfter(validMinutesAfterNow: 30)]
         public virtual DateTime StartDateTime { get; set; }
 
         [Required]
