@@ -3,7 +3,6 @@ using CalifornianHealth.Controllers;
 using CalifornianHealth.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,11 +143,10 @@ namespace CalifornianHealth
             context.SaveChanges();
         }
         CHDBContext DbContext() => new CHDBContext(dbContextOptions);
-        static EntityFrameworkOperationService Operation(CHDBContext db) =>
-            new EntityFrameworkOperationService(
+        static EntityFrameworkCreateAppointmentOperation Operation(CHDBContext db) =>
+            new EntityFrameworkCreateAppointmentOperation(
                 db: db,
-                concurrency: new ConcurrentQueueConcurrencyService(),
-                clock: new SystemClock());
+                concurrency: new ConcurrentQueueConcurrencyService());
         static Appointment Appointment() => new Appointment()
         {
             ConsultantId = GetRandom(1, 4),

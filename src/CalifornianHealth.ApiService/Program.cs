@@ -13,10 +13,10 @@ builder.Services.AddDbContext<CHDBContext>(db =>
     db.UseSqlServer(builder.Configuration["Data:SqlServer:ConnectionString"]);
 });
 
-builder.Services.AddTransient<IFetchConsultantsOperation, EntityFrameworkOperationService>();
-builder.Services.AddTransient<IFetchConsultantCalendarOperation, EntityFrameworkOperationService>();
-builder.Services.AddTransient<IFetchConsultantScheduleOperation, EntityFrameworkOperationService>();
-builder.Services.AddTransient<ICreateAppointmentOperation, EntityFrameworkOperationService>();
+builder.Services.AddTransient<IFetchConsultantsOperation, EntityFrameworkFetchConsultantsOperation>();
+builder.Services.AddTransient<IFetchConsultantCalendarOperation, EntityFrameworkFetchConsultantCalendarOperation>();
+builder.Services.AddTransient<IFetchConsultantScheduleOperation, EntityFrameworkFetchConsultantScheduleOperation>();
+builder.Services.AddTransient<ICreateAppointmentOperation, EntityFrameworkCreateAppointmentOperation>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
