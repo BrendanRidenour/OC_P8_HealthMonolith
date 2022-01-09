@@ -1,8 +1,13 @@
-﻿namespace CalifornianHealth
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CalifornianHealth
 {
     public class Time
     {
+        [Required]
         public int Hour { get; }
+
+        [Required]
         public int Minute { get; }
 
         public Time(int hour, int minute)

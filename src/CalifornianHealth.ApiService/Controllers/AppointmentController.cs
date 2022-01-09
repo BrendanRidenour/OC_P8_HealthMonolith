@@ -10,7 +10,7 @@ namespace CalifornianHealth.Controllers
         /// </summary>
         /// <param name="appointment">The model to create and schedule an appointment</param>
         /// <response code="201">Returned if the appointment was successfully created and scheduled</response>
-        /// <response code="409">Returned if the appointment was not created due to a scheduling conflict</response>
+        /// <response code="409">Returned if the appointment could not be created due to a scheduling conflict</response>
         [HttpPost("/appointment")]
         public async Task<IActionResult> CreateAppointment(
             [FromServices] Data.ICreateAppointmentOperation operation,

@@ -1,9 +1,16 @@
-﻿namespace CalifornianHealth
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CalifornianHealth
 {
     public class Date
     {
+        [Required]
         public int Year { get; set; }
+
+        [Required]
         public int Month { get; set; }
+
+        [Required]
         public int Day { get; set; }
 
         public Date(DateTime dateTime)

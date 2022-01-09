@@ -12,7 +12,7 @@ namespace CalifornianHealth.Controllers
         /// <param name="date">The date to query for available times</param>
         /// <returns>Returns the available times on a particular day that a consultant is available to see patients</returns>
         /// <response code="200">Returned if available times are found for the consultant on a particular day</response>
-        /// <response code="400">Returned if the date supplied is misformed or invalid</response>
+        /// <response code="400">Returned if the date supplied is malformed or invalid</response>
         /// <response code="404">Returned if no consultant is found by that id</response>
         [HttpGet("/consultants/{consultantId}/schedule/{date}")]
         public async Task<ActionResult<ConsultantAvailability<Time>?>> FetchConsultantSchedule(
