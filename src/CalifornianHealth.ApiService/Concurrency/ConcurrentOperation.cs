@@ -11,7 +11,7 @@
 
         public void Dispose()
         {
-            this._operationSource.TrySetResult();
+            this._operationSource?.TrySetResult();
         }
     }
 }
