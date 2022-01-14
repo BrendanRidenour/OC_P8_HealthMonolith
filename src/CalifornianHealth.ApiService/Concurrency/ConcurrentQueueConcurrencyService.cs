@@ -29,22 +29,27 @@ namespace CalifornianHealth.Concurrency
                 queueExecuting = true;
             }
 
-            while (!queue.IsEmpty)
+            try
             {
-                if (queue.TryDequeue(out var queueSource))
+                while (!queue.IsEmpty)
                 {
-                    var operationSource = new TaskCompletionSource();
-                    var operation = new ConcurrentOperation(operationSource);
+                    if (queue.TryDequeue(out var queueSource))
+                    {
+                        var operationSource = new TaskCompletionSource();
+                        var operation = new ConcurrentOperation(operationSource);
 
-                    queueSource.SetResult(operation);
+                        queueSource.SetResult(operation);
 
-                    await operationSource.Task;
+                        await operationSource.Task;
+                    }
                 }
             }
-
-            lock (queueExecuting_Lock)
+            finally
             {
-                queueExecuting = false;
+                lock (queueExecuting_Lock)
+                {
+                    queueExecuting = false;
+                }
             }
         }
     }
